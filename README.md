@@ -3,6 +3,8 @@
 
 ### 使用说明
 
+> 参考：https://yq.aliyun.com/articles/682761
+
 ```xml
 <dependency>
     <groupId>me.weteam</groupId>
