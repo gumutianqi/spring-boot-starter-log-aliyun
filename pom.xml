@@ -6,7 +6,7 @@
 
     <groupId>me.weteam</groupId>
     <artifactId>spring-boot-starter-log-aliyun</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <modules>
         <module>spring-boot-starter-logging-aliyun</module>
     </modules>
@@ -49,7 +49,7 @@
         <gpg.skip>false</gpg.skip>
 
         <!-- spring -->
-        <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.20.RELEASE</spring-boot.version>
 
         <aliyun-openservices-log.version>0.6.31</aliyun-openservices-log.version>
         <aliyun-log-producer.version>0.2.0</aliyun-log-producer.version>
