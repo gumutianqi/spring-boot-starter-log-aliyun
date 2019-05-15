@@ -54,7 +54,7 @@ public class AliyunLogProperties implements Serializable {
      */
     @Data
     @Validated
-    static class AliyunLogProjectConfig implements Serializable {
+    public static class AliyunLogProjectConfig implements Serializable {
         private static final long serialVersionUID = 1368332269292883222L;
 
         /**
@@ -91,7 +91,7 @@ public class AliyunLogProperties implements Serializable {
      * @since 3.0.0
      */
     @Data
-    static class AliyunProducerConfig implements Serializable {
+    public static class AliyunProducerConfig implements Serializable {
         private static final long serialVersionUID = -3593242994012311721L;
 
         /**

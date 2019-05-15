@@ -50,7 +50,7 @@
         <gpg.skip>false</gpg.skip>
 
         <!-- spring -->
-        <spring-boot.version>1.5.20.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.21.RELEASE</spring-boot.version>
 
         <aliyun-openservices-log.version>0.6.31</aliyun-openservices-log.version>
         <aliyun-log-producer.version>0.2.0</aliyun-log-producer.version>
@@ -139,7 +139,7 @@
 
     <profiles>
         <profile>
-            <id>sonar</id>
+            <id>default</id>
             <build>
                 <plugins>
                     <!-- GPG -->
@@ -171,53 +171,6 @@
                     <id>oss</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <!-- sxw.cn 私有仓库配置 -->
-            <id>default</id>
-            <!-- 本地仓库配置 -->
-            <repositories>
-                <repository>
-                    <id>maven-public</id>
-                    <url>http://nexus.sxw.cn/repository/maven-public/</url>
-                    <releases>
-                        <updatePolicy>never</updatePolicy>
-                        <enabled>true</enabled>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>maven-public</id>
-                    <url>http://nexus.sxw.cn/repository/maven-public/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                        <updatePolicy>always</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-            <distributionManagement>
-                <repository>
-                    <id>maven-releases</id>
-                    <url>http://nexus.sxw.cn/repository/maven-releases/</url>
-                </repository>
-                <snapshotRepository>
-                    <id>maven-snapshots</id>
-                    <url>http://nexus.sxw.cn/repository/maven-snapshots/</url>
-                </snapshotRepository>
             </distributionManagement>
         </profile>
     </profiles>
