@@ -64,7 +64,9 @@ public class AliyunLogHub {
         LogItem logItem = new LogItem();
         logMap.forEach(logItem::PushBack);
         try {
-            logProducer.send(project, logStore, topic, source, logItem, callback);
+            if(logProducer != null) {
+                logProducer.send(project, logStore, topic, source, logItem, callback);
+            }
         } catch (InterruptedException e) {
             log.warn("The current thread has been interrupted during send logs.");
         } catch (ProducerException e) {
