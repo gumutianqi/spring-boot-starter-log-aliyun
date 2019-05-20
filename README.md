@@ -4,6 +4,8 @@
 ### 使用说明
 
 > 参考：https://yq.aliyun.com/articles/682761
+> 
+> 参考：https://github.com/aliyun/aliyun-log-java-producer
 
 **已经发布到 Maven 中央仓库，直接引用以下依赖**
 
@@ -58,7 +60,7 @@ public class LogBot {
     @Autowired
     private AliyunLogHub aliyunLogHub;
 
-    // 通过阿里云 SDK 可知，可以同时想多个 Log Project 发送日志；
+    // 通过阿里云 SDK 可知，可以同时向多个 Log Project 发送日志；
     // 我们的建议是：在同一个 Log Project 下面创建多个 Log Store；
 
     private static final String REQUESTS_LOG_PROJECT = "api-log";
