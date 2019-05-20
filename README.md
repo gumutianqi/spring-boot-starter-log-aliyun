@@ -5,6 +5,8 @@
 
 > 参考：https://yq.aliyun.com/articles/682761
 
+**已经发布到 Maven 中央仓库，直接引用以下依赖**
+
 ```xml
 <dependency>
     <groupId>me.weteam</groupId>
