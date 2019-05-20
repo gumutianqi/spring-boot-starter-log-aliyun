@@ -36,7 +36,9 @@ public class AliyunLogHub {
     /**
      * 发送一个 K/V 日志对象
      *
-     * @param logMap
+     * @param project  aliyun log project name
+     * @param logStore aliyun log log store for project
+     * @param logMap   aliyun log data
      */
     public void send(String project, String logStore, Map<String, String> logMap) {
         this.send(project, logStore, "", "", logMap);
@@ -45,11 +47,11 @@ public class AliyunLogHub {
     /**
      * 发送一个 K/V 日志对象
      *
-     * @param project
-     * @param logStore
-     * @param topic
-     * @param source
-     * @param logMap
+     * @param project  aliyun log project name
+     * @param logStore aliyun log log store for project
+     * @param topic    aliyun log topic
+     * @param source   aliyun log source
+     * @param logMap   aliyun log data
      */
     public void send(String project, String logStore, String topic, String source, Map<String, String> logMap) {
         this.send(project, logStore, topic, source, logMap, null);
@@ -58,13 +60,18 @@ public class AliyunLogHub {
     /**
      * 发送一个 K/V 日志对象
      *
-     * @param logMap 日志对象
+     * @param project  aliyun log project name
+     * @param logStore aliyun log log store for project
+     * @param topic    aliyun log topic
+     * @param source   aliyun log source
+     * @param logMap   aliyun log data
+     * @param callback aliyun log send result callback
      */
     public void send(String project, String logStore, String topic, String source, Map<String, String> logMap, Callback callback) {
         LogItem logItem = new LogItem();
         logMap.forEach(logItem::PushBack);
         try {
-            if(logProducer != null) {
+            if (logProducer != null) {
                 logProducer.send(project, logStore, topic, source, logItem, callback);
             }
         } catch (InterruptedException e) {

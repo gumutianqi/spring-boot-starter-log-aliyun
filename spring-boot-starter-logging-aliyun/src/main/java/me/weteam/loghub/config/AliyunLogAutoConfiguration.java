@@ -22,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
  * LogHub 工具，构建 Log 采集对象
  *
  * @author LarryKoo (larrykoo@126.com)
- * @slogon 站在巨人的肩膀上
  * @date 2019-05-10 20:04
+ * @slogon 站在巨人的肩膀上
  * @since 3.0.0
  */
 @Slf4j
@@ -45,7 +45,8 @@ public class AliyunLogAutoConfiguration {
     /**
      * 创建最终开箱即用的 AliyunLogHub 实例
      *
-     * @return
+     * @param logProducer LogProducer 实例
+     * @return AliyunLogHub
      */
     @Bean
     @ConditionalOnMissingBean
@@ -54,10 +55,10 @@ public class AliyunLogAutoConfiguration {
     }
 
     /**
-     * 创建 LogProducer 对象
+     * 创建 LogProducer 对象;
+     * 参考：https://yq.aliyun.com/articles/682761
      *
-     * @return
-     * @see {https://yq.aliyun.com/articles/682761}
+     * @return LogProducer
      */
     @Bean
     @ConditionalOnMissingBean
@@ -81,7 +82,7 @@ public class AliyunLogAutoConfiguration {
     /**
      * 读取 Aliyun Log Project 配置，实例化 ProjectConfigs 对象
      *
-     * @return
+     * @return ProjectConfigs
      */
     private ProjectConfigs projectConfigs() {
         ProjectConfigs projectConfigs = new ProjectConfigs();
