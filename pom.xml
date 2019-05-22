@@ -6,7 +6,7 @@
 
     <groupId>me.weteam</groupId>
     <artifactId>spring-boot-starter-log-aliyun</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <modules>
         <module>spring-boot-starter-logging-aliyun</module>
     </modules>
@@ -63,6 +63,7 @@
 
         <aliyun-openservices-log.version>0.6.31</aliyun-openservices-log.version>
         <aliyun-log-producer.version>0.2.0</aliyun-log-producer.version>
+        <fastjson.version>1.2.58</fastjson.version>
         <lombok.version>1.18.8</lombok.version>
     </properties>
 
@@ -89,6 +90,11 @@
             </dependency>
 
             <!-- Util -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

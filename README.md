@@ -13,9 +13,24 @@
 <dependency>
     <groupId>me.weteam</groupId>
     <artifactId>spring-boot-starter-logging-aliyun</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
+
+### 版本更新记录
+
+**2019-05-22 -> 1.0.1**
+
+> 新增`plugin`模块，后续陆续集成基于面向对象的插件化数据采集模式；
+>
+> 新增插件：基于 ThreadLocal 的 Event 采集；使用该插件，可以采集一个线程栈过程中的 Event 事件数据；
+> ThreadLocal-event 插件文档: 
+
+**2019-05-20 -> 1.0.0**
+
+> 第一个版本，集成 `aliyun-log-producer`，完成 spring-boot-starer 适配；
+> 实现自动配置，开箱即用；具体参考下文的配置文档和使用文档；
+
 
 ### 配置说明
 
