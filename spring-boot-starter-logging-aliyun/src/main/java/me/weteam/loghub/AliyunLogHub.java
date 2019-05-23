@@ -12,8 +12,8 @@ import com.aliyun.openservices.aliyun.log.producer.errors.ProducerException;
 import com.aliyun.openservices.aliyun.log.producer.errors.TimeoutException;
 import com.aliyun.openservices.log.common.LogItem;
 import lombok.extern.slf4j.Slf4j;
-import me.weteam.loghub.config.AliyunLogProperties;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -54,7 +54,33 @@ public class AliyunLogHub {
      * @param logMap   aliyun log data
      */
     public void send(String project, String logStore, String topic, String source, Map<String, String> logMap) {
-        this.send(project, logStore, topic, source, logMap, null);
+        this.send(project, logStore, topic, source, null, logMap, null);
+    }
+
+    /**
+     * 发送一个 K/V 日志对象
+     *
+     * @param project  aliyun log project name
+     * @param logStore aliyun log log store for project
+     * @param mLogTime aliyun log time
+     * @param logMap   aliyun log data
+     */
+    public void sendWithTime(String project, String logStore, Date mLogTime, Map<String, String> logMap) {
+        this.sendWithTime(project, logStore, "", "", mLogTime, logMap);
+    }
+
+    /**
+     * 发送一个 K/V 日志对象
+     *
+     * @param project  aliyun log project name
+     * @param logStore aliyun log log store for project
+     * @param topic    aliyun log topic
+     * @param source   aliyun log source
+     * @param mLogTime aliyun log time
+     * @param logMap   aliyun log data
+     */
+    public void sendWithTime(String project, String logStore, String topic, String source, Date mLogTime, Map<String, String> logMap) {
+        this.send(project, logStore, topic, source, mLogTime, logMap, null);
     }
 
     /**
@@ -67,8 +93,14 @@ public class AliyunLogHub {
      * @param logMap   aliyun log data
      * @param callback aliyun log send result callback
      */
-    public void send(String project, String logStore, String topic, String source, Map<String, String> logMap, Callback callback) {
-        LogItem logItem = new LogItem();
+    public void send(String project, String logStore, String topic, String source, Date mLogTime, Map<String, String> logMap, Callback callback) {
+        LogItem logItem;
+        if (mLogTime != null) {
+            logItem = new LogItem((int) mLogTime.getTime() / 1000);
+        } else {
+            logItem = new LogItem();
+        }
+
         logMap.forEach(logItem::PushBack);
         try {
             if (logProducer != null) {

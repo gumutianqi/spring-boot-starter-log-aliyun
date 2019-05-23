@@ -87,10 +87,9 @@ public abstract class AbstractLogEvent implements Serializable {
     /**
      * 转换对象为 MAP 对象
      *
-     * @return Map<String, String> 对象
+     * @return Map 对象
      */
     public Map<String, String> toMap() {
-        return JSON.parseObject(toJSON(), new TypeReference<Map<String, String>>() {
-        });
+        return JSON.parseObject(toJSON(), new TypeReference<Map<String, String>>() {});
     }
 }
