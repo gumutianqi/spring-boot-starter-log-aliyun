@@ -1,86 +1,98 @@
-/*
- * Copyright (c) 2019. WeTeam Inc. All Rights Reserved.
- *
- */
-
 package me.weteam.loghub.plugins.event;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.PropertyNamingStrategy;
 import com.alibaba.fastjson.TypeReference;
-import com.alibaba.fastjson.annotation.JSONType;
-import lombok.AllArgsConstructor;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.HashMap;
 
 /**
- * 事件日志对象
+ * <p>Event 事件对象规范协议</p>
+ * <p></p>
  *
- * @author LarryKoo (larrykoo@126.com)
- * @slogon 站在巨人的肩膀上
- * @date 2019-05-21 10:19
- * @since 3.0.0
+ * @author 阿古 (larrykoo@126.com)
+ * @date 2022/2/28 10:09
+ * @since 1.0.0
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@JSONType(naming = PropertyNamingStrategy.SnakeCase)
-public abstract class AbstractLogEvent implements Serializable {
-    private static final long serialVersionUID = 1776316984501205238L;
+@Accessors(chain = true)
+public class AbstractLogEvent implements Serializable {
+    private static final long serialVersionUID = 2392325212772370052L;
 
     /**
-     * 事件所在的 TraceId
+     * 事件ID 32位随机字符串
      */
-    private String traceId;
+    @JSONField(name = "_event_id")
+    private String eventId;
 
     /**
-     * 事件发生时当前的用户
+     * 事件源类型
      */
-    private String currentUser;
+    @JSONField(name = "_event_source_type")
+    private String eventSourceType;
 
     /**
-     * 事件发生的位置
+     * 事件源
      */
-    private String location;
+    @JSONField(name = "_event_source")
+    private String eventSource;
 
     /**
-     * 事件做了什么
+     * 自定义枚举事件类型
      */
-    private String action;
+    @JSONField(name = "_event_type")
+    private String eventType;
 
     /**
-     * 事件相关的内容消息
+     * 事件 Topic [冗余信息]
      */
-    private String message;
+    @JSONField(name = "_event_topic")
+    private String eventTopic;
 
     /**
-     * 事件处理结果
+     * 事件发生本地时间戳
      */
-    private String result;
+    @JSONField(name = "_event_occurred_time")
+    private Long eventOccurredTime;
 
     /**
-     * 事件耗时; 单位：毫秒
+     * 事件生产本地时间戳
      */
-    private Long duration;
+    @JSONField(name = "_event_produced_time")
+    private Long eventProducedTime;
+
+    /**
+     * 业务扩展元信息，事件生产者针对原始事件富化的内容
+     */
+    private Object meta;
+
+    /**
+     * 事件的原始消息内容
+     */
+    private Object data;
+
+    //------------------------------------------------------------------------------
+    //---------------------------- JSON 序列化工具 -----------------------------------
+    //------------------------------------------------------------------------------
 
     /**
      * 返回对象JSON字符串
      *
-     * @return json 字符串
+     * @return JSON 字符串
      */
-    public String toJSON() {
+    public String toJson() {
         return JSON.toJSONString(this);
     }
 
     /**
      * 返回对象格式化的JSON字符串
      *
-     * @return json 字符串
+     * @return 格式化后的 JSON 字符串
      */
-    public String toJSONFormat() {
+    public String toJsonFormat() {
         return JSON.toJSONString(this, true);
     }
 
@@ -89,7 +101,8 @@ public abstract class AbstractLogEvent implements Serializable {
      *
      * @return Map 对象
      */
-    public Map<String, String> toMap() {
-        return JSON.parseObject(toJSON(), new TypeReference<Map<String, String>>() {});
+    public HashMap<String, String> toMap() {
+        return JSON.parseObject(toJson(), new TypeReference<>() {
+        });
     }
 }

@@ -6,13 +6,13 @@
 package me.weteam.loghub.config;
 
 import com.aliyun.openservices.aliyun.log.producer.ProducerConfig;
+import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * AliyunLog Properties 配置项
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "aliyun.loghub")
+@ConfigurationProperties(prefix = "aliyun.sls")
 public class AliyunLogProperties implements Serializable {
     private static final long serialVersionUID = 3255246417921427277L;
 
@@ -34,53 +34,44 @@ public class AliyunLogProperties implements Serializable {
     private boolean enabled = false;
 
     /**
-     * Aliyun Log Project 配置，可同时配置多个 Log Project
+     * Aliyun Log Project Name
      */
-    private List<AliyunLogProjectConfig> projects;
+    @NotBlank
+    private String projectName;
+
+    /**
+     * Aliyun Log Project endpoint area
+     */
+    @NotBlank
+    private String endpoint;
+
+    /**
+     * Aliyun accessKeyId
+     */
+    @NotBlank
+    private String accessKeyId;
+
+    /**
+     * Aliyun accessKeySecret
+     */
+    @NotBlank
+    private String accessKeySecret;
+
+    /**
+     * Aliyun STS Token，Optional
+     */
+    private String stsToken;
+
+    /**
+     * Aliyun SLS Request UA
+     * 默认值：[aliyun-log-java-producer]
+     */
+    private String userAgent = ProjectConfig.DEFAULT_USER_AGENT;
 
     /**
      * Aliyun Log Producer Config
      */
     private AliyunProducerConfig producer = new AliyunProducerConfig();
-
-
-    /**
-     * AliyunLog ProjectConfig Properties
-     *
-     * @author LarryKoo (larrykoo@126.com)
-     * @slogon 站在巨人的肩膀上
-     * @date 2019-05-13 14:51
-     * @since 3.0.0
-     */
-    @Data
-    @Validated
-    public static class AliyunLogProjectConfig implements Serializable {
-        private static final long serialVersionUID = 1368332269292883222L;
-
-        /**
-         * Aliyun Log Project Name
-         */
-        @NotBlank
-        private String projectName;
-
-        /**
-         * Aliyun Log Project endpoint area
-         */
-        @NotBlank
-        private String endpoint;
-
-        /**
-         * Aliyun accessKeyId
-         */
-        @NotBlank
-        private String accessKeyId;
-
-        /**
-         * Aliyun accessKeySecret
-         */
-        @NotBlank
-        private String accessKeySecret;
-    }
 
     /**
      * LogProducer 相关的配置项

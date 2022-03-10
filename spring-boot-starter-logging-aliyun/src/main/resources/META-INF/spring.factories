@@ -1,3 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  me.weteam.loghub.config.AliyunLogAutoConfiguration

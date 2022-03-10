@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 采集上下文的数据
+ * 基于 ThreadLocal 采集上下文的数据转换为
  *
  * @author LarryKoo (larrykoo@126.com)
  * @slogon 站在巨人的肩膀上
@@ -23,12 +23,12 @@ import java.util.Map;
  * @since 3.0.0
  */
 @Slf4j
-public class MonitorEventHolder {
+public class ThreadEventHolder {
 
     private static final Map<String, AbstractLogEvent> EVENT_MAP = new HashMap<>();
 
     private static final ThreadLocal<Map<String, AbstractLogEvent>> EVENT_HOLDER =
-            new NamedThreadLocal<>("LarryKoo plugins -> MonitorEventHolder");
+            new NamedThreadLocal<>("LarryKoo plugins -> ThreadEventHolder");
 
     /**
      * 通过指定 topic 初始化事件

@@ -6,14 +6,11 @@
 
     <groupId>me.weteam</groupId>
     <artifactId>spring-boot-starter-log-aliyun</artifactId>
-    <version>1.0.1</version>
-    <modules>
-        <module>spring-boot-starter-logging-aliyun</module>
-    </modules>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>spring-boot-starter-log-aliyun</name>
-    <description>基于阿里云日志服务，aliyun-log-producer 封装的 spring-boot starter 组件支持</description>
+    <description>spring-boot-starter-log-aliyun project pom</description>
     <url>https://github.com/gumutianqi/spring-boot-starter-log-aliyun</url>
 
     <parent>
@@ -21,6 +18,10 @@
         <artifactId>oss-parent</artifactId>
         <version>9</version>
     </parent>
+
+    <modules>
+        <module>spring-boot-starter-logging-aliyun</module>
+    </modules>
 
     <licenses>
         <license>
@@ -49,33 +50,26 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
 
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.source>11</maven.compiler.source>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <gpg.skip>false</gpg.skip>
 
-        <!-- spring -->
-        <spring-boot.version>1.5.21.RELEASE</spring-boot.version>
-
+        <!-- project dependencies -->
+        <spring-boot.version>2.6.4</spring-boot.version>
         <aliyun-openservices-log.version>0.6.31</aliyun-openservices-log.version>
-        <aliyun-log-producer.version>0.2.0</aliyun-log-producer.version>
-        <fastjson.version>1.2.58</fastjson.version>
-        <lombok.version>1.18.8</lombok.version>
+        <aliyun-log-producer.version>0.3.10</aliyun-log-producer.version>
+        <fastjson.version>1.2.79</fastjson.version>
+        <lombok.version>1.18.22</lombok.version>
+        <mica-auto.version>2.2.2</mica-auto.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- aliyun log provider -->
-            <dependency>
-                <groupId>com.aliyun.openservices</groupId>
-                <artifactId>aliyun-log-producer</artifactId>
-                <version>${aliyun-log-producer.version}</version>
-            </dependency>
-
             <!-- Spring-Boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -89,7 +83,19 @@
                 <version>${spring-boot.version}</version>
             </dependency>
 
+            <!-- aliyun log provider -->
+            <dependency>
+                <groupId>com.aliyun.openservices</groupId>
+                <artifactId>aliyun-log-producer</artifactId>
+                <version>${aliyun-log-producer.version}</version>
+            </dependency>
+
             <!-- Util -->
+            <dependency>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-auto</artifactId>
+                <version>${mica-auto.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -116,31 +122,9 @@
                     <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <tags>
-                        <tag>
-                            <name>date</name>
-                        </tag>
-                        <tag>
-                            <name>slogon</name>
-                        </tag>
-                    </tags>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
 
     <repositories>
         <repository>

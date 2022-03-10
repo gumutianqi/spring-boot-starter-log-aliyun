@@ -8,7 +8,6 @@ package me.weteam.loghub.config;
 import com.aliyun.openservices.aliyun.log.producer.LogProducer;
 import com.aliyun.openservices.aliyun.log.producer.ProducerConfig;
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
-import com.aliyun.openservices.aliyun.log.producer.ProjectConfigs;
 import lombok.extern.slf4j.Slf4j;
 import me.weteam.loghub.AliyunLogHub;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -32,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
         LogProducer.class,
         AliyunLogHub.class
 })
-@ConditionalOnProperty(prefix = "aliyun.loghub", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "aliyun.sls", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(AliyunLogProperties.class)
 public class AliyunLogAutoConfiguration {
 
@@ -51,7 +50,7 @@ public class AliyunLogAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public AliyunLogHub aliyunLogHub(LogProducer logProducer) {
-        return new AliyunLogHub(logProducer);
+        return new AliyunLogHub(logProducer, properties.getProjectName());
     }
 
     /**
@@ -63,8 +62,9 @@ public class AliyunLogAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public LogProducer logProducer() {
-        ProducerConfig producerConfig = new ProducerConfig(projectConfigs());
+        ProducerConfig producerConfig = new ProducerConfig();
 
+        // 初始化 {@link AliyunProducerConfig}
         AliyunLogProperties.AliyunProducerConfig producerProp = properties.getProducer();
         producerConfig.setTotalSizeInBytes(producerProp.getTotalSizeInBytes());
         producerConfig.setMaxBlockMs(producerProp.getMaxBlockMs());
@@ -76,7 +76,11 @@ public class AliyunLogAutoConfiguration {
         producerConfig.setBaseRetryBackoffMs(producerProp.getBaseRetryBackoffMs());
         producerConfig.setMaxRetryBackoffMs(producerProp.getMaxRetryBackoffMs());
 
-        return new LogProducer(producerConfig);
+        // 初始化 {@link LogProducer}
+        LogProducer producer = new LogProducer(producerConfig);
+        producer.putProjectConfig(ofProjectConfig());
+
+        return producer;
     }
 
     /**
@@ -84,13 +88,13 @@ public class AliyunLogAutoConfiguration {
      *
      * @return ProjectConfigs
      */
-    private ProjectConfigs projectConfigs() {
-        ProjectConfigs projectConfigs = new ProjectConfigs();
-
-        properties.getProjects().stream().map(item -> new ProjectConfig(
-                item.getProjectName(), item.getEndpoint(),
-                item.getAccessKeyId(), item.getAccessKeySecret())).forEach(projectConfigs::put);
-
-        return projectConfigs;
+    private ProjectConfig ofProjectConfig() {
+        return new ProjectConfig(
+                properties.getProjectName(),
+                properties.getEndpoint(),
+                properties.getAccessKeyId(),
+                properties.getAccessKeySecret(),
+                properties.getStsToken(),
+                properties.getUserAgent());
     }
 }
