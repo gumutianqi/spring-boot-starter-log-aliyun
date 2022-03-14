@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 基于 Aliyun Log Producer 封装
+ * <p>基于 Aliyun Log Producer 封装</p>
  *
  * @author LarryKoo (larrykoo@126.com)
  * @slogon 站在巨人的肩膀上
@@ -90,6 +90,7 @@ public class AliyunLogHub {
      * @param logStore aliyun log log store for project
      * @param topic    aliyun log topic
      * @param source   aliyun log source
+     * @param mLogDate aliyun log time
      * @param logMap   aliyun log data
      * @param callback aliyun log send result callback
      */

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 /**
  * <p>Event 事件对象规范协议</p>
- * <p></p>
+ * <p>-</p>
  *
  * @author 阿古 (larrykoo@126.com)
  * @date 2022/2/28 10:09
@@ -101,7 +101,7 @@ public class AbstractLogEvent implements Serializable {
      *
      * @return Map 对象
      */
-    public HashMap<String, String> toMap() {
+    public HashMap<String, Object> toMap() {
         return JSON.parseObject(toJson(), new TypeReference<>() {
         });
     }

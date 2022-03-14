@@ -13,23 +13,25 @@
 <dependency>
     <groupId>me.weteam</groupId>
     <artifactId>spring-boot-starter-logging-aliyun</artifactId>
-    <version>1.0.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 ### 版本更新记录
 
+**2022-03-14 -> 2.0.0**
+
+
 **2019-05-22 -> 1.0.1**
 
-> 新增`plugin`模块，后续陆续集成基于面向对象的插件化数据采集模式；
->
-> 新增插件：基于 ThreadLocal 的 Event 采集；使用该插件，可以采集一个线程栈过程中的 Event 事件数据；
-> ThreadLocal-event 插件文档: 
+- 新增`plugin`模块，后续陆续集成基于面向对象的插件化数据采集模式；
+- 新增插件：基于 ThreadLocal 的 Event 采集；使用该插件，可以采集一个线程栈过程中的 Event 事件数据；
+- ThreadLocal-event 插件文档: 
 
 **2019-05-20 -> 1.0.0**
 
-> 第一个版本，集成 `aliyun-log-producer`，完成 spring-boot-starer 适配；
-> 实现自动配置，开箱即用；具体参考下文的配置文档和使用文档；
+- 第一个版本，集成 `aliyun-log-producer`，完成 spring-boot-starer 适配；
+- 实现自动配置，开箱即用；具体参考下文的配置文档和使用文档；
 
 
 ### 配置说明
@@ -43,15 +45,12 @@ aliyun:
     producer:
       retries: 3
     ## 可以同时配置多个 aliyun log project
-    projects:
-      - project-name: <AliyunLog Project Name>
-        endpoint: cn-hangzhou.log.aliyuncs.com
-        access-key-id: <AccessKeyId>
-        access-key-secret: <AccessKeySecret>
-      - project-name: <AliyunLog Project Name>
-        endpoint: cn-hangzhou.log.aliyuncs.com
-        access-key-id: <AccessKeyId>
-        access-key-secret: <AccessKeySecret>
+    project-name: 必填 <AliyunLog Project Name>
+    endpoint: 必填 cn-hangzhou.log.aliyuncs.com
+    access-key-id: 必填 <AccessKeyId>
+    access-key-secret: 必填 <AccessKeySecret>
+    sts-token: 可选：[STS-Token]
+    user-agent: aliyun-log-java-producer [aliyun-log-java-producer]
 ```
 
 ### 使用说明
@@ -78,10 +77,7 @@ public class LogBot {
     // 通过阿里云 SDK 可知，可以同时向多个 Log Project 发送日志；
     // 我们的建议是：在同一个 Log Project 下面创建多个 Log Store；
 
-    private static final String REQUESTS_LOG_PROJECT = "api-log";
     private static final String REQUESTS_LOG_PROJECT_STORE = "api-request";
-
-    private static final String EVENT_LOG_PROJECT = "api-log";
     private static final String EVENT_LOG_PROJECT_STORE = "api-event";
 
     /**
@@ -89,8 +85,8 @@ public class LogBot {
      *
      * @param logMap
      */
-    public void sendRequest(Map<String, String> logMap) {
-        aliyunLogHub.send(REQUESTS_LOG_PROJECT, REQUESTS_LOG_PROJECT_STORE, logMap);
+    public void sendRequest(Map<String, Object> logMap) {
+        aliyunLogHub.send(REQUESTS_LOG_PROJECT_STORE, logMap);
     }
 
     /**
@@ -98,12 +94,31 @@ public class LogBot {
      *
      * @param logMap
      */
-    public void sendEvent(Map<String, String> logMap) {
-        aliyunLogHub.send(EVENT_LOG_PROJECT, EVENT_LOG_PROJECT_STORE, logMap);
+    public void sendEvent(Map<String, Object> logMap) {
+        aliyunLogHub.send(EVENT_LOG_PROJECT_STORE, logMap);
     }
     
     //.... 可扩展为封装其他类型的日志
 }
+```
+
+**注意点**
+由于阿里云 SLS 在写入 Log 数据时限制了 logMap 必须是 `Map<String, String>` 类型；
+因此，`AliyunLogHub` 在最终写入前对 LogMap 做了如下处理，如果出现写入类型异常，关注这里；
+
+```java
+// AliyunLogHub.java - 102行
+logMap.forEach((k, v) -> {
+    String val = "null";
+    if (!Objects.isNull(v)) {
+        if (v instanceof String) {
+            val = String.valueOf(v);
+        } else {
+            val = JSON.toJSONString(v);
+        }
+    }
+    logItem.PushBack(k, val);
+});
 ```
 
 **使用建议：**
