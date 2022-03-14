@@ -20,18 +20,21 @@
 ### 版本更新记录
 
 **2022-03-14 -> 2.0.0**
-
+- `fix` 修复 SLS 写入 LogMap 强制要求 Map<String, String> 类型的问题
+- `enhance` 调整 SLS 配置维度，只能操作单个 Project 下的 LogStore
+- `feat` 升级支持 SpringBoot 2.x
+- `feat` 升级支持 OpenJDK-11
 
 **2019-05-22 -> 1.0.1**
 
-- 新增`plugin`模块，后续陆续集成基于面向对象的插件化数据采集模式；
-- 新增插件：基于 ThreadLocal 的 Event 采集；使用该插件，可以采集一个线程栈过程中的 Event 事件数据；
-- ThreadLocal-event 插件文档: 
+- `feat` 新增`plugin`模块，后续陆续集成基于面向对象的插件化数据采集模式
+- `feat` 新增插件：基于 ThreadLocal 的 Event 采集；使用该插件，可以采集一个线程栈过程中的 Event 事件数据
+- `feat` 新增 ThreadLocal-event 插件文档
 
 **2019-05-20 -> 1.0.0**
 
-- 第一个版本，集成 `aliyun-log-producer`，完成 spring-boot-starer 适配；
-- 实现自动配置，开箱即用；具体参考下文的配置文档和使用文档；
+- `release` 第一个版本，集成 `aliyun-log-producer`，完成 spring-boot-starer 适配
+- `feat` 实现自动配置，开箱即用；具体参考下文的配置文档和使用文档
 
 
 ### 配置说明
