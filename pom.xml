@@ -66,6 +66,9 @@
         <fastjson.version>1.2.79</fastjson.version>
         <lombok.version>1.18.22</lombok.version>
         <mica-auto.version>2.2.2</mica-auto.version>
+        <protobuf-java.version>3.19.4</protobuf-java.version>
+        <guava.version>31.1-jre</guava.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <dependencyManagement>
