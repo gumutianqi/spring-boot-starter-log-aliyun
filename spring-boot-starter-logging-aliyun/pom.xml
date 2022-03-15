@@ -5,12 +5,12 @@
     <parent>
         <artifactId>spring-boot-starter-log-aliyun</artifactId>
         <groupId>me.weteam</groupId>
-        <version>2.0.0</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-starter-logging-aliyun</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1-SNAPSHOT</version>
 
     <name>spring-boot-starter-logging-aliyun</name>
     <description>
@@ -60,6 +60,11 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

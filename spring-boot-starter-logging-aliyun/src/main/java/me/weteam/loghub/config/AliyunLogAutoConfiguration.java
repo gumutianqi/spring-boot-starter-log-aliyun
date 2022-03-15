@@ -8,8 +8,10 @@ package me.weteam.loghub.config;
 import com.aliyun.openservices.aliyun.log.producer.LogProducer;
 import com.aliyun.openservices.aliyun.log.producer.ProducerConfig;
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
+import com.aliyun.openservices.log.Client;
 import lombok.extern.slf4j.Slf4j;
 import me.weteam.loghub.AliyunLogHub;
+import me.weteam.loghub.AliyunLogQuery;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -51,6 +53,18 @@ public class AliyunLogAutoConfiguration {
     @ConditionalOnMissingBean
     public AliyunLogHub aliyunLogHub(LogProducer logProducer) {
         return new AliyunLogHub(logProducer, properties.getProjectName());
+    }
+
+    /**
+     * 声明开箱即用的 AliyunLogQuery 实例
+     *
+     * @return AliyunLogQuery
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public AliyunLogQuery aliyunLogQuery() {
+        return new AliyunLogQuery(new Client(properties.getEndpoint(),
+                properties.getAccessKeyId(), properties.getAccessKeySecret()), properties.getProjectName());
     }
 
     /**
