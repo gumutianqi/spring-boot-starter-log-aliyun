@@ -63,7 +63,7 @@
         <spring-boot.version>2.6.4</spring-boot.version>
         <aliyun-openservices-log.version>0.6.31</aliyun-openservices-log.version>
         <aliyun-log-producer.version>0.3.10</aliyun-log-producer.version>
-        <fastjson.version>1.2.79</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <lombok.version>1.18.22</lombok.version>
         <mica-auto.version>2.2.2</mica-auto.version>
     </properties>
